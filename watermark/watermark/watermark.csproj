@@ -52,6 +52,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="islemler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -78,6 +79,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="img\buton.png" />
+    <Content Include="img\cerceve.png" />
+    <Content Include="img\cerceve1.png" />
+    <Content Include="img\cerceve2.png" />
+    <Content Include="img\cerceve3.png" />
+    <Content Include="img\goruntusec.png" />
+    <Content Include="img\metin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="img\testimg\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
