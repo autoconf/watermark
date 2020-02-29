@@ -44,7 +44,7 @@ namespace watermark
         private void metinRichTextBox_TextChanged(object sender, EventArgs e)
         {
             Int32 max = metinRichTextBox.MaxLength - metinRichTextBox.Text.Length;
-            maxDegerLabel.Text = "Max : " + string.Format("{0,0}", max).Replace(",", ".");
+            maxDegerLabel.Text = "Max : " + string.Format("{0:0,0}", max).Replace(",", ".");
             if (max < 10)
             {
                 maxDegerLabel.ForeColor = Color.Red;
