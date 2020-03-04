@@ -65,7 +65,7 @@ namespace watermark
                 }
                 catch
                 {
-
+                    MessageBox.Show("Metin girişi yapılırken hata.");
                 }
             }
             else

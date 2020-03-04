@@ -1,0 +1,37 @@
+Ýþlemler	Görüntünün :	1.px	2.px	3.px	4.px	5.px	6.px
+
+Metni þifreleme yok		0	-	-	-	-	-
+Metni þifreleme var		1	-	-	-	-	-
+
+Þifreleme (Reverse ASCII)	1	0	-	-	-	-
+Þifreleme (Steganografi)	1	1	-	-	-	-
+
+Metni Tek Bitlere Ekle		-	-	0	0	-	-
+Metni Çift Bitlere Ekle		-	-	0	1	-	-
+Metni Tüm Bitlere Ekle		-	-	1	1	-	-
+
+Kýrmýzý Paletine Ekle		-	-	-	-	0	1	
+Yeþil Paletine Ekle		-	-	-	-	1	0	
+Mavi Paletine Ekle		-	-	-	-	1	1
+
+
+Metni þifreleme yok	0000
+Metni þifreleme var	0001
+
+Reverse ASCII		0011
+Steganografi		0100
+
+Tek bitlere ekle	0101
+Çift bitlere ekle	0110
+Tüm bitlere ekle	0111
+
+kýrmýzý palete ekle	1000
+yeþil palete ekle	1001
+mavi palete ekle	1010
+
+2 bite ekle		1011
+1 bite ekle		1100
+
+--			1101
+--			1110
+--			1111	
