@@ -33,6 +33,14 @@ namespace watermark
                     metinRichTextBox.Enabled = true;
                     maxDegerLabel.Text = "Max : " + string.Format("{0:0,0}", max).Replace(",", ".");
                     metinRichTextBox.MaxLength = max;
+                    if (goruntuSecPictureBox.Image.Height < 290 || goruntuSecPictureBox.Image.Width < 515)
+                    {
+                        goruntuSecPictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
+                    }
+                    else
+                    {
+                        goruntuSecPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    }
                 }
             }
             catch

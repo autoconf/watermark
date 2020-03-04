@@ -349,7 +349,7 @@
             // 
             // metinRichTextBox
             // 
-            this.metinRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.metinRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.metinRichTextBox.Enabled = false;
             this.metinRichTextBox.Location = new System.Drawing.Point(17, 88);
             this.metinRichTextBox.Name = "metinRichTextBox";
