@@ -73,12 +73,12 @@ namespace watermark
             panel1.Enabled = true;
             int goruntuYuksekligi = goruntuSecPictureBox.Image.Height;
             int goruntuGenisligi = goruntuSecPictureBox.Image.Width;
-            int kontrolBitSayisi = 6;
-            Int32 max = goruntuGenisligi * goruntuYuksekligi - kontrolBitSayisi;
+            //int kontrolBitSayisi = 6;
+            Int32 max = (goruntuGenisligi * goruntuYuksekligi) * 3;
             //şifreleme
-            sifreYokLabel.Text = "Max : " + max.ToString();
-            sifreAsciiLabel.Text = "Max : " + max.ToString();
-            sifreStegLabel.Text = "Max : " + max.ToString();
+            sifreYokLabel.Text = "Max : " + (max - 6).ToString();
+            sifreAsciiLabel.Text = "Max : " + (max - 6).ToString();
+            sifreStegLabel.Text = "Max : " + (max - 6).ToString();
             if (sifreYokRadioButton.Checked == true)
             {
                 panel2LabelDuzenle(max);
@@ -102,8 +102,8 @@ namespace watermark
         private void panel2LabelDuzenle(Int32 max) {
             //piksel gizleme
             panel2.Enabled = true;
-            tumPikselLabel.Text = "Max : " + max.ToString();
-            tekPikselLabel.Text = "Max : " + (max / 2).ToString();
+            tumPikselLabel.Text = "Max : " + (max - 6).ToString();
+            tekPikselLabel.Text = "Max : " + ((max / 2) - 6).ToString();
             ciftPikselLabel.Text = tekPikselLabel.Text;
             if (tumPikselRadioButton.Checked == true)
             {
@@ -114,21 +114,15 @@ namespace watermark
             {
                 max = max / 2;
                 panel3LabelDuzenle(max);
-                //tekPikselLabel.Text = "Max : " + (max / 2).ToString();
-                /*
-                 * 3.px = 0
-                 * 4.px = 0
-                */
+                //3.px = 0
+                //4.px = 0
             }
             else if (ciftPikselRadioButton.Checked == true)
             {
                 max = max / 2;
                 panel3LabelDuzenle(max);
-                //ciftPikselLabel.Text = "Max : " + (max / 2).ToString();
-                /*
-                 * 3.px = 0
-                 * 4.px = 1
-                */
+                //3.px = 0
+                //4.px = 1
             }
         }
 
@@ -136,16 +130,16 @@ namespace watermark
         {
             panel3.Enabled = true;
             //palet işlemleri
-            tumPaletLabel.Text = "Max : " + max.ToString();
-            kirmiziPaletLabel.Text = "Max : " + (max / 3).ToString();
+            tumPaletLabel.Text = "Max : " + (max - 6).ToString();
+            kirmiziPaletLabel.Text = "Max : " + ((max / 3) - 6).ToString();
             yesilPaletLabel.Text = kirmiziPaletLabel.Text;
             maviPaletLabel.Text = kirmiziPaletLabel.Text;
             if (tumPaletRadioButton.Checked == true)
             {
                 //5.px = 0
                 //6.px = 0
-                maxDegerLabel.Text = "Max : " + string.Format("{0:0,0}", max).Replace(",", ".");
-                metinRichTextBox.MaxLength = max;
+                maxDegerLabel.Text = string.Format("{0:0,0}", tumPaletLabel.Text).Replace(",", ".");
+                metinRichTextBox.MaxLength = max - 6;
                 metinRichTextBox.Enabled = true;
             }
             else if (kirmiziPaletRadioButton.Checked == true)
@@ -154,8 +148,8 @@ namespace watermark
                 //5.px = 0
                 //6.px = 1
                 max = max / 3;
-                maxDegerLabel.Text = "Max : " + string.Format("{0:0,0}", max).Replace(",", ".");
-                metinRichTextBox.MaxLength = max;
+                maxDegerLabel.Text = string.Format("{0:0,0}", kirmiziPaletLabel.Text).Replace(",", ".");
+                metinRichTextBox.MaxLength = (max / 3) - 6;
                 metinRichTextBox.Enabled = true;
             }
             else if (yesilPaletRadioButton.Checked == true)
@@ -163,8 +157,8 @@ namespace watermark
                 //5.px = 1
                 //6.px = 0
                 max = max / 3;
-                maxDegerLabel.Text = "Max : " + string.Format("{0:0,0}", max).Replace(",", ".");
-                metinRichTextBox.MaxLength = max;
+                maxDegerLabel.Text = string.Format("{0:0,0}", yesilPaletLabel.Text).Replace(",", ".");
+                metinRichTextBox.MaxLength = (max / 3) - 6;
                 metinRichTextBox.Enabled = true;
             }
             else if (maviPaletRadioButton.Checked == true)
@@ -172,8 +166,8 @@ namespace watermark
                 //5.px = 1
                 //6.px = 1
                 max = max / 3;
-                maxDegerLabel.Text = "Max : " + string.Format("{0:0,0}", max).Replace(",", ".");
-                metinRichTextBox.MaxLength = max;
+                maxDegerLabel.Text = string.Format("{0:0,0}", maviPaletLabel.Text).Replace(",", ".");
+                metinRichTextBox.MaxLength = (max / 3) - 6;
                 metinRichTextBox.Enabled = true;
             }
             // En anlamsız 2 bit işlemleri duruma göre yapılacak.. Standart şuan aktif olan LSB 1 Bit.
