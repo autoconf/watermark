@@ -19,15 +19,21 @@ namespace watermark
         islemler islem = new islemler();
         private void goruntuSecPictureBox_Click(object sender, EventArgs e)
         {
+            int goruntuYuksekligi = 0, goruntuGenisligi = 0;
             try
             { 
                 OpenFileDialog open = new OpenFileDialog();
-                open.Filter = "Image Files(*.png; *.jpg; *.jpeg; *.bmp)|*.png; *.jpg; *.jpeg; *.bmp";
+                open.Filter = "Image Files(*.png; *.jpg; *.jpeg; *.gif; *.bmp)|*.png; *.jpg; *.jpeg; *.gif; *.bmp";
                 if (open.ShowDialog() == DialogResult.OK)
                 {
                     goruntuSecPictureBox.Image = new Bitmap(open.FileName);
-                    panel1LabelDuzenle();
-                    if (goruntuSecPictureBox.Image.Height < goruntuSecPictureBox.Height || goruntuSecPictureBox.Image.Width < goruntuSecPictureBox.Width)
+                    goruntuYuksekligi = goruntuSecPictureBox.Image.Height;
+                    goruntuGenisligi = goruntuSecPictureBox.Image.Width;
+                    Int32 max = islem.maxDegerHesapla(goruntuYuksekligi, goruntuGenisligi);
+                    metinRichTextBox.Enabled = true;
+                    maxDegerLabel.Text = "Max : " + string.Format("{0:0,0}", max).Replace(",", ".");
+                    metinRichTextBox.MaxLength = max;
+                    if (goruntuSecPictureBox.Image.Height < 290 || goruntuSecPictureBox.Image.Width < 515)
                     {
                         goruntuSecPictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
                     }
@@ -65,173 +71,9 @@ namespace watermark
             else
             {
                 maxDegerLabel.ForeColor = Color.Black;
-            }          
-        }
-
-        private void panel1LabelDuzenle()//checkbox kontrol
-        {
-            panel1.Enabled = true;
-            int goruntuYuksekligi = goruntuSecPictureBox.Image.Height;
-            int goruntuGenisligi = goruntuSecPictureBox.Image.Width;
-            int kontrolBitSayisi = 6;
-            Int32 max = goruntuGenisligi * goruntuYuksekligi - kontrolBitSayisi;
-            //şifreleme
-            sifreYokLabel.Text = "Max : " + max.ToString();
-            sifreAsciiLabel.Text = "Max : " + max.ToString();
-            sifreStegLabel.Text = "Max : " + max.ToString();
-            if (sifreYokRadioButton.Checked == true)
-            {
-                panel2LabelDuzenle(max);
-                //1.px = 0
-            }
-            else if (sifreAsciiRadioButton.Checked == true)
-            {
-                panel2LabelDuzenle(max);
-                 //1.px = 1
-                 //2.px = 0
-            }
-            else if (sifreStegRadioButton.Checked == true)
-            {
-                panel2LabelDuzenle(max);
-                //1.px = 1
-                //2.px = 1
             }
             
-        }
-
-        private void panel2LabelDuzenle(Int32 max) {
-            //piksel gizleme
-            panel2.Enabled = true;
-            tumPikselLabel.Text = "Max : " + max.ToString();
-            tekPikselLabel.Text = "Max : " + (max / 2).ToString();
-            ciftPikselLabel.Text = tekPikselLabel.Text;
-            if (tumPikselRadioButton.Checked == true)
-            {
-                panel3LabelDuzenle(max);
-                //3.px = 1
-            }
-            else if (tekPikselRadioButton.Checked == true)
-            {
-                max = max / 2;
-                panel3LabelDuzenle(max);
-                //tekPikselLabel.Text = "Max : " + (max / 2).ToString();
-                /*
-                 * 3.px = 0
-                 * 4.px = 0
-                */
-            }
-            else if (ciftPikselRadioButton.Checked == true)
-            {
-                max = max / 2;
-                panel3LabelDuzenle(max);
-                //ciftPikselLabel.Text = "Max : " + (max / 2).ToString();
-                /*
-                 * 3.px = 0
-                 * 4.px = 1
-                */
-            }
-        }
-
-        private void panel3LabelDuzenle(Int32 max)
-        {
-            panel3.Enabled = true;
-            //palet işlemleri
-            tumPaletLabel.Text = "Max : " + max.ToString();
-            kirmiziPaletLabel.Text = "Max : " + (max / 3).ToString();
-            yesilPaletLabel.Text = kirmiziPaletLabel.Text;
-            maviPaletLabel.Text = kirmiziPaletLabel.Text;
-            if (tumPaletRadioButton.Checked == true)
-            {
-                //5.px = 0
-                //6.px = 0
-                maxDegerLabel.Text = "Max : " + string.Format("{0:0,0}", max).Replace(",", ".");
-                metinRichTextBox.MaxLength = max;
-                metinRichTextBox.Enabled = true;
-            }
-            else if (kirmiziPaletRadioButton.Checked == true)
-            {
-                //kirmiziPaletLabel.Text = "Max : " + (max / 3).ToString();
-                //5.px = 0
-                //6.px = 1
-                max = max / 3;
-                maxDegerLabel.Text = "Max : " + string.Format("{0:0,0}", max).Replace(",", ".");
-                metinRichTextBox.MaxLength = max;
-                metinRichTextBox.Enabled = true;
-            }
-            else if (yesilPaletRadioButton.Checked == true)
-            {
-                //5.px = 1
-                //6.px = 0
-                max = max / 3;
-                maxDegerLabel.Text = "Max : " + string.Format("{0:0,0}", max).Replace(",", ".");
-                metinRichTextBox.MaxLength = max;
-                metinRichTextBox.Enabled = true;
-            }
-            else if (maviPaletRadioButton.Checked == true)
-            {
-                //5.px = 1
-                //6.px = 1
-                max = max / 3;
-                maxDegerLabel.Text = "Max : " + string.Format("{0:0,0}", max).Replace(",", ".");
-                metinRichTextBox.MaxLength = max;
-                metinRichTextBox.Enabled = true;
-            }
-            // En anlamsız 2 bit işlemleri duruma göre yapılacak.. Standart şuan aktif olan LSB 1 Bit.
-        }
-
-        private void pictureBox3_Click(object sender, EventArgs e)
-        {
             
-        }
-
-        private void sifreYokRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            panel1LabelDuzenle();
-        }
-
-        private void sifreAsciiRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            panel1LabelDuzenle();
-        }
-
-        private void sifreStegRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            panel1LabelDuzenle();
-        }
-
-        private void tumPikselRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            panel1LabelDuzenle();
-        }
-
-        private void tekPikselRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            panel1LabelDuzenle();
-        }
-
-        private void ciftPikselRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            panel1LabelDuzenle();
-        }
-
-        private void tumPaletRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            panel1LabelDuzenle();
-        }
-
-        private void kirmiziPaletRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            panel1LabelDuzenle();
-        }
-
-        private void yesilPaletRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            panel1LabelDuzenle();
-        }
-
-        private void maviPaletRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            panel1LabelDuzenle();
         }
     }
 }

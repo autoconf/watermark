@@ -1,23 +1,18 @@
-Ýþlemler	Görüntünün :	1.px	2.px	3.px	4.px	5.px	6.px	7.px
+Ýþlemler	Görüntünün :	1.px	2.px	3.px	4.px	5.px	6.px
 
-Metni þifreleme yok		0	-	-	-	-	-	-
-Metni þifreleme var		1	-	-	-	-	-	-
+Metni þifreleme yok		0	-	-	-	-	-
+Metni þifreleme var		1	-	-	-	-	-
 
-Þifreleme (Reverse ASCII)	1	0	-	-	-	-	-
-Þifreleme (Steganografi)	1	1	-	-	-	-	-
+Þifreleme (Reverse ASCII)	1	0	-	-	-	-
+Þifreleme (Steganografi)	1	1	-	-	-	-
 
-Metni Tek Piksellere Ekle	-	-	0	0	-	-	-
-Metni Çift Piksellere Ekle	-	-	0	1	-	-	-
-Metni Tüm Piksellere Ekle	-	-	1	0	-	-	-
+Metni Tek Bitlere Ekle		-	-	0	0	-	-
+Metni Çift Bitlere Ekle		-	-	0	1	-	-
+Metni Tüm Bitlere Ekle		-	-	1	1	-	-
 
-RGB Paletine Ekle		-	-	-	-	0	0	-
-Kýrmýzý Paletine Ekle		-	-	-	-	0	1	-
-Yeþil Paletine Ekle		-	-	-	-	1	0	-
-Mavi Paletine Ekle		-	-	-	-	1	1	-
-
-duruma göre yapýlacak þuan 7. px kullanýlmadan LSB 1 bit ile iþlem yapýlýyor.
-LSB 1 bit 			-	-	-	-	-	-	0
-LSB 2 bit			-	-	-	-	-	-	1
+Kýrmýzý Paletine Ekle		-	-	-	-	0	1	
+Yeþil Paletine Ekle		-	-	-	-	1	0	
+Mavi Paletine Ekle		-	-	-	-	1	1
 
 
 Metni þifreleme yok	0000
