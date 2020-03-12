@@ -10,9 +10,7 @@ namespace watermark
     {
         public Int32 maxDegerHesapla (int resimYuksekligi, int resimGenisligi)
         {
-            //int yukseklik = 0, genislik = 0;
-            //yukseklik = resimYuksekligi;
-            //genislik = resimGenisligi;
+            //if text == 0111;
             Int32 sonuc = (resimYuksekligi * resimGenisligi) - 4;
             return sonuc;
         }
