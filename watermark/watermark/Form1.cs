@@ -74,11 +74,11 @@ namespace watermark
             int goruntuYuksekligi = goruntuSecPictureBox.Image.Height;
             int goruntuGenisligi = goruntuSecPictureBox.Image.Width;
             //int kontrolBitSayisi = 6;
-            Int32 max = (goruntuGenisligi * goruntuYuksekligi) * 3;
+            Int32 max = ((goruntuGenisligi / 8) * goruntuYuksekligi) * 3;
             //şifreleme
-            sifreYokLabel.Text = "Max : " + (max - 6).ToString();
-            sifreAsciiLabel.Text = "Max : " + (max - 6).ToString();
-            sifreStegLabel.Text = "Max : " + (max - 6).ToString();
+            sifreYokLabel.Text = "Max : " + (max - 1).ToString();
+            sifreAsciiLabel.Text = "Max : " + (max - 1).ToString();
+            sifreStegLabel.Text = "Max : " + (max - 1).ToString();
             if (sifreYokRadioButton.Checked == true)
             {
                 panel2LabelDuzenle(max);
@@ -102,8 +102,8 @@ namespace watermark
         private void panel2LabelDuzenle(Int32 max) {
             //piksel gizleme
             panel2.Enabled = true;
-            tumPikselLabel.Text = "Max : " + (max - 6).ToString();
-            tekPikselLabel.Text = "Max : " + ((max / 2) - 6).ToString();
+            tumPikselLabel.Text = "Max : " + (max - 1).ToString();
+            tekPikselLabel.Text = "Max : " + (max / 2 - 1).ToString();
             ciftPikselLabel.Text = tekPikselLabel.Text;
             if (tumPikselRadioButton.Checked == true)
             {
@@ -130,8 +130,8 @@ namespace watermark
         {
             panel3.Enabled = true;
             //palet işlemleri
-            tumPaletLabel.Text = "Max : " + (max - 6).ToString();
-            kirmiziPaletLabel.Text = "Max : " + ((max / 3) - 6).ToString();
+            tumPaletLabel.Text = "Max : " + (max - 1).ToString();
+            kirmiziPaletLabel.Text = "Max : " + (max / 3 - 1).ToString();
             yesilPaletLabel.Text = kirmiziPaletLabel.Text;
             maviPaletLabel.Text = kirmiziPaletLabel.Text;
             if (tumPaletRadioButton.Checked == true)
@@ -139,7 +139,7 @@ namespace watermark
                 //5.px = 0
                 //6.px = 0
                 maxDegerLabel.Text = string.Format("{0:0,0}", tumPaletLabel.Text).Replace(",", ".");
-                metinRichTextBox.MaxLength = max - 6;
+                metinRichTextBox.MaxLength = max;
                 metinRichTextBox.Enabled = true;
             }
             else if (kirmiziPaletRadioButton.Checked == true)
@@ -149,7 +149,7 @@ namespace watermark
                 //6.px = 1
                 max = max / 3;
                 maxDegerLabel.Text = string.Format("{0:0,0}", kirmiziPaletLabel.Text).Replace(",", ".");
-                metinRichTextBox.MaxLength = (max / 3) - 6;
+                metinRichTextBox.MaxLength = max;
                 metinRichTextBox.Enabled = true;
             }
             else if (yesilPaletRadioButton.Checked == true)
@@ -158,7 +158,7 @@ namespace watermark
                 //6.px = 0
                 max = max / 3;
                 maxDegerLabel.Text = string.Format("{0:0,0}", yesilPaletLabel.Text).Replace(",", ".");
-                metinRichTextBox.MaxLength = (max / 3) - 6;
+                metinRichTextBox.MaxLength = max;
                 metinRichTextBox.Enabled = true;
             }
             else if (maviPaletRadioButton.Checked == true)
@@ -167,7 +167,7 @@ namespace watermark
                 //6.px = 1
                 max = max / 3;
                 maxDegerLabel.Text = string.Format("{0:0,0}", maviPaletLabel.Text).Replace(",", ".");
-                metinRichTextBox.MaxLength = (max / 3) - 6;
+                metinRichTextBox.MaxLength = max;
                 metinRichTextBox.Enabled = true;
             }
             // En anlamsız 2 bit işlemleri duruma göre yapılacak.. Standart şuan aktif olan LSB 1 Bit.
@@ -175,7 +175,46 @@ namespace watermark
 
         private void pictureBox3_Click(object sender, EventArgs e)
         {
+            string metin = metinRichTextBox.Text;
             
+            //binary çevir
+            string result = string.Empty;
+            string binaryText = string.Empty;
+            foreach (char ch in metin)
+            {
+                string binary = string.Empty;
+                result += Convert.ToString((int)ch, 2) + "\t";
+                binary = Convert.ToString((int)ch, 2);
+
+                //çevirilen binary uzunluğuna göre ekleme yapılmalı 0000-00-0 gibi
+                if (binary.Length < 5)
+                {
+                    binaryText += "0000" + binary;
+                }
+                else if (binary.Length < 7)
+                {
+                    binaryText += "00" + binary;
+                }
+                else if (binary.Length < 8)
+                {
+                    binaryText += "0" + binary;
+                }
+                else
+                {
+                    binaryText += binary;
+                }
+                    
+            }
+            MessageBox.Show($"Karakter bazlı Listeleme \n{result} \n"+ result.Length + "\n" + binaryText.Length + "\n\nKarakter bazlı 8 Bite Tamamlanmış Listeleme\n" + binaryText);
+
+            //metne çevir
+            List<Byte> byteList = new List<Byte>();
+
+            for (int i = 0; i < binaryText.Length; i += 8)
+            {
+                byteList.Add(Convert.ToByte(binaryText.Substring(i, 8), 2));
+            }
+            MessageBox.Show(Encoding.ASCII.GetString(byteList.ToArray()));
         }
 
         private void sifreYokRadioButton_CheckedChanged(object sender, EventArgs e)

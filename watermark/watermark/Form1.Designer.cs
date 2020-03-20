@@ -150,7 +150,8 @@
             this.metinRichTextBox.Name = "metinRichTextBox";
             this.metinRichTextBox.Size = new System.Drawing.Size(480, 250);
             this.metinRichTextBox.TabIndex = 28;
-            this.metinRichTextBox.Text = "";
+            this.metinRichTextBox.Text = "01\n23\n45\n67\n89\n\n1975\nbindokuzyuzyetmisbes\n\nO M U\nOndokuz Mayis Universitesi\nMuhen" +
+    "dislik Fakultesi\nBilgisayar Muhendisligi\nSAMSUN";
             this.metinRichTextBox.TextChanged += new System.EventHandler(this.metinRichTextBox_TextChanged);
             // 
             // anlamsiz1BitRadioButton
