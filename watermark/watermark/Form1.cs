@@ -207,7 +207,15 @@ namespace watermark
             }
             MessageBox.Show("Karakter bazlı Listeleme : " + result.Length + " Karakter \n\n" +  result + "\n\nKarakter bazlı 8 Bite Tamamlanmış Listeleme : " +binaryText.Length + " Karakter \n\n" + binaryText);
 
+            /// Checkkontrolü
+            /// 
+            string ilk8Piksel = checkBox_kontrolu();
 
+
+            /// Görüntüye ekleme işlemi
+            /// 
+
+            metniGoruntuyeGizle(ilk8Piksel);
 
 
 
@@ -221,6 +229,72 @@ namespace watermark
                 byteList.Add(Convert.ToByte(binaryText.Substring(i, 8), 2));
             }
             MessageBox.Show(Encoding.ASCII.GetString(byteList.ToArray()));
+        }
+
+        private void metniGoruntuyeGizle(string ilk8piksel)
+        {
+
+        }
+
+        private string checkBox_kontrolu()
+        {
+            int birinciPx = 0, ikinciPx = 0, ucuncuPx = 0, dorduncuPx = 0, besinciPx = 0, altinciPx = 1;
+            //panel1
+            if (sifreYokRadioButton.Checked == true)
+            {
+                birinciPx = 0;
+                ikinciPx = 0;
+            }
+            else if (sifreAsciiRadioButton.Checked == true)
+            {
+                birinciPx = 1;
+                ikinciPx = 0;
+            }
+            else if(sifreStegRadioButton.Checked == true)
+            {
+                birinciPx = 1;
+                ikinciPx = 1;
+            }
+            //panel2
+            if (tumPikselRadioButton.Checked == true)
+            {
+                ucuncuPx = 1;
+                dorduncuPx = 0;
+            }
+            else if (tekPikselRadioButton.Checked == true)
+            {
+                ucuncuPx = 0;
+                dorduncuPx = 0;
+            }
+            else if (ciftPikselRadioButton.Checked == true)
+            {
+                ucuncuPx = 0;
+                dorduncuPx = 1;
+            }
+            //panel3
+            if (tumPaletRadioButton.Checked == true)
+            {
+                besinciPx = 0;
+                altinciPx = 0;
+            }
+            else if (kirmiziPaletRadioButton.Checked == true)
+            {
+                besinciPx = 0;
+                altinciPx = 1;
+            }
+            else if (yesilPaletRadioButton.Checked == true)
+            {
+                besinciPx = 1;
+                altinciPx = 0;
+            }
+            else if (maviPaletRadioButton.Checked == true)
+            {
+                besinciPx = 1;
+                altinciPx = 1;
+            }
+            string ilk8piksel = Convert.ToString(birinciPx) + Convert.ToString(ikinciPx) + Convert.ToString(ucuncuPx) + Convert.ToString(dorduncuPx) + Convert.ToString(besinciPx) + Convert.ToString(altinciPx) + "00";
+            MessageBox.Show("İlk 8 piksel : " + ilk8piksel);
+            return ilk8piksel;
         }
 
         private void sifreYokRadioButton_CheckedChanged(object sender, EventArgs e)
