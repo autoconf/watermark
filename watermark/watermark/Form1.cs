@@ -139,7 +139,7 @@ namespace watermark
                 //5.px = 0
                 //6.px = 0
                 maxDegerLabel.Text = string.Format("{0:0,0}", tumPaletLabel.Text).Replace(",", ".");
-                metinRichTextBox.MaxLength = max;
+                metinRichTextBox.MaxLength = (max - 1);
                 metinRichTextBox.Enabled = true;
             }
             else if (kirmiziPaletRadioButton.Checked == true)
@@ -149,7 +149,7 @@ namespace watermark
                 //6.px = 1
                 max = max / 3;
                 maxDegerLabel.Text = string.Format("{0:0,0}", kirmiziPaletLabel.Text).Replace(",", ".");
-                metinRichTextBox.MaxLength = max;
+                metinRichTextBox.MaxLength = (max - 1);
                 metinRichTextBox.Enabled = true;
             }
             else if (yesilPaletRadioButton.Checked == true)
@@ -158,7 +158,7 @@ namespace watermark
                 //6.px = 0
                 max = max / 3;
                 maxDegerLabel.Text = string.Format("{0:0,0}", yesilPaletLabel.Text).Replace(",", ".");
-                metinRichTextBox.MaxLength = max;
+                metinRichTextBox.MaxLength = (max - 1);
                 metinRichTextBox.Enabled = true;
             }
             else if (maviPaletRadioButton.Checked == true)
@@ -167,13 +167,13 @@ namespace watermark
                 //6.px = 1
                 max = max / 3;
                 maxDegerLabel.Text = string.Format("{0:0,0}", maviPaletLabel.Text).Replace(",", ".");
-                metinRichTextBox.MaxLength = max;
+                metinRichTextBox.MaxLength = (max - 1);
                 metinRichTextBox.Enabled = true;
             }
             // En anlamsız 2 bit işlemleri duruma göre yapılacak.. Standart şuan aktif olan LSB 1 Bit.
         }
 
-        private void pictureBox3_Click(object sender, EventArgs e)
+        private void islemeBaslaButon_Click(object sender, EventArgs e)
         {
             string metin = metinRichTextBox.Text;
             
@@ -205,7 +205,13 @@ namespace watermark
                 }
                     
             }
-            MessageBox.Show($"Karakter bazlı Listeleme \n{result} \n"+ result.Length + "\n" + binaryText.Length + "\n\nKarakter bazlı 8 Bite Tamamlanmış Listeleme\n" + binaryText);
+            MessageBox.Show("Karakter bazlı Listeleme : " + result.Length + " Karakter \n\n" +  result + "\n\nKarakter bazlı 8 Bite Tamamlanmış Listeleme : " +binaryText.Length + " Karakter \n\n" + binaryText);
+
+
+
+
+
+
 
             //metne çevir
             List<Byte> byteList = new List<Byte>();

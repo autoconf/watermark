@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.goruntuSecPictureBox = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.islemeBaslaButon = new System.Windows.Forms.PictureBox();
             this.maxDegerLabel = new System.Windows.Forms.Label();
             this.anlamsiz1BitLabel = new System.Windows.Forms.Label();
             this.anlamsiz2BitLabel = new System.Windows.Forms.Label();
@@ -66,7 +66,7 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.goruntuSecPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.islemeBaslaButon)).BeginInit();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -97,17 +97,17 @@
             this.goruntuSecPictureBox.TabStop = false;
             this.goruntuSecPictureBox.Click += new System.EventHandler(this.goruntuSecPictureBox_Click);
             // 
-            // pictureBox3
+            // islemeBaslaButon
             // 
-            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(608, 541);
-            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(300, 89);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox3.TabIndex = 2;
-            this.pictureBox3.TabStop = false;
-            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
+            this.islemeBaslaButon.Image = ((System.Drawing.Image)(resources.GetObject("islemeBaslaButon.Image")));
+            this.islemeBaslaButon.Location = new System.Drawing.Point(608, 541);
+            this.islemeBaslaButon.Margin = new System.Windows.Forms.Padding(4);
+            this.islemeBaslaButon.Name = "islemeBaslaButon";
+            this.islemeBaslaButon.Size = new System.Drawing.Size(300, 89);
+            this.islemeBaslaButon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.islemeBaslaButon.TabIndex = 2;
+            this.islemeBaslaButon.TabStop = false;
+            this.islemeBaslaButon.Click += new System.EventHandler(this.islemeBaslaButon_Click);
             // 
             // maxDegerLabel
             // 
@@ -150,8 +150,8 @@
             this.metinRichTextBox.Name = "metinRichTextBox";
             this.metinRichTextBox.Size = new System.Drawing.Size(480, 250);
             this.metinRichTextBox.TabIndex = 28;
-            this.metinRichTextBox.Text = "01\n23\n45\n67\n89\n\n1975\nbindokuzyuzyetmisbes\n\nO M U\nOndokuz Mayis Universitesi\nMuhen" +
-    "dislik Fakultesi\nBilgisayar Muhendisligi\nSAMSUN";
+            this.metinRichTextBox.Text = "01\n23\n45\n67\n89\n1975\nbindokuzyuzyetmisbes\n\nO M U\nOndokuz Mayis Universitesi\nMuhend" +
+    "islik Fakultesi\nBilgisayar Muhendisligi\nSAMSUN";
             this.metinRichTextBox.TextChanged += new System.EventHandler(this.metinRichTextBox_TextChanged);
             // 
             // anlamsiz1BitRadioButton
@@ -503,7 +503,7 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.metinRichTextBox);
             this.Controls.Add(this.maxDegerLabel);
-            this.Controls.Add(this.pictureBox3);
+            this.Controls.Add(this.islemeBaslaButon);
             this.Controls.Add(this.goruntuSecPictureBox);
             this.Controls.Add(this.pictureBox1);
             this.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -517,7 +517,7 @@
             this.Text = "Su İzi (Watermark) ile Görüntü Oluşturma";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.goruntuSecPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.islemeBaslaButon)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -536,7 +536,7 @@
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox goruntuSecPictureBox;
-        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox islemeBaslaButon;
         private System.Windows.Forms.Label maxDegerLabel;
         private System.Windows.Forms.Label anlamsiz1BitLabel;
         private System.Windows.Forms.Label anlamsiz2BitLabel;
