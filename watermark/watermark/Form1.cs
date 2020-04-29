@@ -176,6 +176,9 @@ namespace watermark
         private void islemeBaslaButon_Click(object sender, EventArgs e)
         {
             string metin = metinRichTextBox.Text;
+            /// Checkkontrolü
+            /// 
+            string ilk6piksel = checkBox_kontrolu();
             
             //binary çevir
             string result = string.Empty;
@@ -207,23 +210,17 @@ namespace watermark
             }
             MessageBox.Show("Karakter bazlı Listeleme : " + result.Length + " Karakter \n\n" +  result + "\n\nKarakter bazlı 8 Bite Tamamlanmış Listeleme : " +binaryText.Length + " Karakter \n\n" + binaryText);
 
-            /// Checkkontrolü
-            /// 
-            string ilk8Piksel = checkBox_kontrolu();
-
-
+            
             /// Görüntüye ekleme işlemi
             /// 
 
-            metniGoruntuyeGizle(ilk8Piksel);
+            metniGoruntuyeGizle(ilk6piksel, binaryText);
 
-
-
-
+            
 
             //metne çevir
             List<Byte> byteList = new List<Byte>();
-
+            //8den başlıyor --> 8bit-1byte
             for (int i = 0; i < binaryText.Length; i += 8)
             {
                 byteList.Add(Convert.ToByte(binaryText.Substring(i, 8), 2));
@@ -231,9 +228,100 @@ namespace watermark
             MessageBox.Show(Encoding.ASCII.GetString(byteList.ToArray()));
         }
 
-        private void metniGoruntuyeGizle(string ilk8piksel)
+        private void metniGoruntuyeGizle(string ilk6piksel, string binaryMetin)
         {
+            Bitmap yenigorsel = new Bitmap(goruntuSecPictureBox.Image.Width, goruntuSecPictureBox.Image.Height);
+            Bitmap gorsel = new Bitmap(goruntuSecPictureBox.Image);
+            //ilk8bit için ilk 6 pikselin mavi renk paletlerine ekleme yapılıyor.. 2 pikselde değişiklik yapılmıyor. 
+            for (int i = 0; i < 6; i++)
+            {
+                int B = 0;
+                Color piksel = gorsel.GetPixel(i, 0);
+                string firstBinary = string.Empty;
+                string lastBinary = string.Empty;
+                B = piksel.B;
+                firstBinary = Convert.ToString((int)piksel.B, 2);
+                if (firstBinary.Last() != ilk6piksel[i])
+                {
+                    B = B - 1;
+                }
+                Color DonusenRenk = Color.FromArgb(B);
+                yenigorsel.SetPixel(i, 0, DonusenRenk);
+                lastBinary = Convert.ToString((int)DonusenRenk.B, 2);
+                MessageBox.Show($"{i} Piksel'in Mavi Paleti Binary 8 Biti \nİşlem Kodu(ilk6piksel){ilk6piksel[i]}\nİlk Hali : \t\t{firstBinary}\nDönüşen Hali : \t{lastBinary}");//Değerlerin gösterimi
+            }
 
+
+            ///29.04.2020 -- 8. pxden başlanıp oluşturulan metin eklenecek
+
+
+            //ilk 8 bitten sonra tüm renk paletine metin ekleniyor..
+            if (ilk6piksel[0] == '0' && ilk6piksel[1] == '0')
+            {
+                //şifreleme yok
+                if (ilk6piksel[2] == '1' && ilk6piksel[3] == '0')
+                {
+                    //tüm piksel
+                    if (ilk6piksel[4] == '0' && ilk6piksel[5] == '0')
+                    {
+                        //tüm palet
+                        /*
+                        int i = 0;
+                        for (int y = 0; y < 1; y++) //gorsel.Height
+                        {
+                            for (int x = 0; x < 1; x++) //gorsel.Width
+                            {
+                                int R = 0, G = 0, B = 0;
+                                Color piksel = gorsel.GetPixel(x, y);
+                                string binary = string.Empty;
+                                R = piksel.R;
+                                G = piksel.G;
+                                B = piksel.B;
+                                binary = Convert.ToString((int)piksel.B, 2);
+                                MessageBox.Show("İlk piksel Mavi Binary 8. Biti İlk Hali : " + binary);//ilk hali
+                                if (binary.Last() != binaryMetin[i])
+                                {
+                                    B = B - 1;
+                                }
+                                Color DonusenRenk = Color.FromArgb(R, G, B);
+                                yenigorsel.SetPixel(x, y, DonusenRenk);
+                                binary = Convert.ToString((int)DonusenRenk.B, 2);
+                                MessageBox.Show("İlk piksel Mavi Binary 8. Biti Dönüşen Hali : " + binary);//dönüşüm hali
+                                i++;
+                            }
+                        }
+                        */
+                    }
+                    else if (ilk6piksel[4] == '0' && ilk6piksel[5] == '1')
+                    {
+                        //kırmızı palet
+                    }
+                    else if (ilk6piksel[4] == '1' && ilk6piksel[5] == '0')
+                    {
+                        //yesil palet
+                    }
+                    else if (ilk6piksel[4] == '0' && ilk6piksel[5] == '1')
+                    {
+                        //mavi palet
+                    }
+                }
+                else if (ilk6piksel[2] == '0' && ilk6piksel[3] == '0')
+                {
+                    //tek piksel
+                }
+                else if (ilk6piksel[2] == '0' && ilk6piksel[3] == '1')
+                {
+                    //çift piksel
+                }
+            }
+            else if (ilk6piksel[0] == '1' && ilk6piksel[1] == '0')
+            {
+                //reverse ascii
+            }
+            else if (ilk6piksel[0] == '1' && ilk6piksel[1] == '1')
+            {
+                //steganografi
+            }
         }
 
         private string checkBox_kontrolu()
@@ -292,9 +380,9 @@ namespace watermark
                 besinciPx = 1;
                 altinciPx = 1;
             }
-            string ilk8piksel = Convert.ToString(birinciPx) + Convert.ToString(ikinciPx) + Convert.ToString(ucuncuPx) + Convert.ToString(dorduncuPx) + Convert.ToString(besinciPx) + Convert.ToString(altinciPx) + "00";
-            MessageBox.Show("İlk 8 piksel : " + ilk8piksel);
-            return ilk8piksel;
+            string ilk6piksel = Convert.ToString(birinciPx) + Convert.ToString(ikinciPx) + Convert.ToString(ucuncuPx) + Convert.ToString(dorduncuPx) + Convert.ToString(besinciPx) + Convert.ToString(altinciPx);
+            MessageBox.Show("İlk 6 piksel : " + ilk6piksel);
+            return ilk6piksel;
         }
 
         private void sifreYokRadioButton_CheckedChanged(object sender, EventArgs e)
