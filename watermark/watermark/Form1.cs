@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -230,7 +231,7 @@ namespace watermark
 
         private void metniGoruntuyeGizle(string ilk6piksel, string binaryMetin)
         {
-            Bitmap yenigorsel = new Bitmap(goruntuSecPictureBox.Image.Width, goruntuSecPictureBox.Image.Height);
+            Bitmap yenigorsel = new Bitmap(goruntuSecPictureBox.Image);
             Bitmap gorsel = new Bitmap(goruntuSecPictureBox.Image);
             //ilk8bit için ilk 6 pikselin mavi renk paletlerine ekleme yapılıyor.. 2 pikselde değişiklik yapılmıyor. 
             for (int i = 0; i < 6; i++)
@@ -245,17 +246,17 @@ namespace watermark
                 {
                     B = B - 1;
                 }
-                Color DonusenRenk = Color.FromArgb(B);
+                Color DonusenRenk = Color.FromArgb(piksel.R, piksel.G,B);
                 yenigorsel.SetPixel(i, 0, DonusenRenk);
                 lastBinary = Convert.ToString((int)DonusenRenk.B, 2);
-                MessageBox.Show($"{i} Piksel'in Mavi Paleti Binary 8 Biti \nİşlem Kodu(ilk6piksel){ilk6piksel[i]}\nİlk Hali : \t\t{firstBinary}\nDönüşen Hali : \t{lastBinary}");//Değerlerin gösterimi
+                //MessageBox.Show($"{i} Piksel'in Mavi Paleti Binary 8 Biti \nİşlem Kodu(ilk6piksel){ilk6piksel[i]}\nİlk Hali : \t\t{firstBinary}\nDönüşen Hali : \t{lastBinary}");//Değerlerin gösterimi
             }
 
 
             ///29.04.2020 -- 8. pxden başlanıp oluşturulan metin eklenecek
 
 
-            //ilk 8 bitten sonra tüm renk paletine metin ekleniyor..
+            //ilk 6 bitten sonra tüm renk paletine metin ekleniyor..
             if (ilk6piksel[0] == '0' && ilk6piksel[1] == '0')
             {
                 //şifreleme yok
@@ -265,32 +266,52 @@ namespace watermark
                     if (ilk6piksel[4] == '0' && ilk6piksel[5] == '0')
                     {
                         //tüm palet
-                        /*
-                        int i = 0;
-                        for (int y = 0; y < 1; y++) //gorsel.Height
-                        {
-                            for (int x = 0; x < 1; x++) //gorsel.Width
+                        int i = 3;
+                        
+                            for (int y = 0; y < gorsel.Height; y++) //gorsel.Height
                             {
-                                int R = 0, G = 0, B = 0;
-                                Color piksel = gorsel.GetPixel(x, y);
-                                string binary = string.Empty;
-                                R = piksel.R;
-                                G = piksel.G;
-                                B = piksel.B;
-                                binary = Convert.ToString((int)piksel.B, 2);
-                                MessageBox.Show("İlk piksel Mavi Binary 8. Biti İlk Hali : " + binary);//ilk hali
-                                if (binary.Last() != binaryMetin[i])
+                            for (int x = 0; x < gorsel.Width; x++) //gorsel.Width
+                            {
+                                if (y == 0)
                                 {
-                                    B = B - 1;
+                                    x = x + 7;
                                 }
-                                Color DonusenRenk = Color.FromArgb(R, G, B);
-                                yenigorsel.SetPixel(x, y, DonusenRenk);
-                                binary = Convert.ToString((int)DonusenRenk.B, 2);
-                                MessageBox.Show("İlk piksel Mavi Binary 8. Biti Dönüşen Hali : " + binary);//dönüşüm hali
-                                i++;
+                                if (i < binaryMetin.Length - 3)
+                                {
+                                    int R = 0, G = 0, B = 0, A = 0;
+                                    Color piksel = gorsel.GetPixel(x, y);
+                                    string binaryR = string.Empty;
+                                    string binaryG = string.Empty;
+                                    string binaryB = string.Empty;
+                                    A = piksel.A;
+                                    R = piksel.R;
+                                    G = piksel.G;
+                                    B = piksel.B;
+                                    binaryR = Convert.ToString((int)piksel.R, 2);
+                                    binaryG = Convert.ToString((int)piksel.G, 2);
+                                    binaryB = Convert.ToString((int)piksel.B, 2);
+                                    if (binaryR.Last() != binaryMetin[i - 2])
+                                    {
+                                        R = R - 1;
+                                    }
+                                    if (binaryG.Last() != binaryMetin[i - 1])
+                                    {
+                                        G = G - 1;
+                                    }
+                                    if (binaryB.Last() != binaryMetin[i])
+                                    {
+                                        B = B - 1;
+                                    }
+                                    Color DonusenRenk = Color.FromArgb(A, R, G, B);
+                                    yenigorsel.SetPixel(x, y, DonusenRenk);
+                                    string lastBinaryR = Convert.ToString((int)DonusenRenk.R, 2);
+                                    string lastBinaryG = Convert.ToString((int)DonusenRenk.G, 2);
+                                    string lastBinaryB = Convert.ToString((int)DonusenRenk.B, 2);
+                                    //MessageBox.Show($"Metin Karakteri : \t{binaryMetin[i]}\n{i}. piksel Kırmızı Binary 8 Biti ilk Hali : {binaryR} Dönüşen Hali : {lastBinaryR}\nMetin Karakteri : \t{binaryMetin[i+1]}\n{i}. piksel Yeşil Binary 8 Biti ilk Hali : {binaryG} Dönüşen Hali : {lastBinaryG}\nMetinKarakteri : \t{binaryMetin[i+2]}\n{i}. piksel Mavi Binary 8 Biti ilk Hali : {binaryB} Dönüşen Hali : {lastBinaryB}");//değerlendirme gösterimi 
+                                    i += 3;
+                                }
                             }
                         }
-                        */
                     }
                     else if (ilk6piksel[4] == '0' && ilk6piksel[5] == '1')
                     {
@@ -322,6 +343,41 @@ namespace watermark
             {
                 //steganografi
             }
+            resmiKaydet(yenigorsel);
+        }
+
+        public void resmiKaydet(Bitmap resim)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "Bitmap Resmi|*.bmp";//Jpeg Resmi|*.jpg|Gif Resmi|*.gif";
+            saveFileDialog1.Title = "Resmi Kaydet";
+            saveFileDialog1.ShowDialog();
+
+            if (saveFileDialog1.FileName != "") //Dosya adı boş değilse kaydedecek.
+            {
+                // FileStream nesnesi ile kayıtı gerçekleştirecek. 
+                FileStream DosyaAkisi = (FileStream)saveFileDialog1.OpenFile();
+
+                switch (saveFileDialog1.FilterIndex)
+                {
+                    case 1:
+                        resim.Save(DosyaAkisi, System.Drawing.Imaging.ImageFormat.Bmp);
+                        break;
+
+                    /*case 2:
+                        resim.Save(DosyaAkisi, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        break;
+
+                    case 3:
+                        resim.Save(DosyaAkisi, System.Drawing.Imaging.ImageFormat.Png);
+                        break;
+                    */
+                }
+
+                DosyaAkisi.Close();
+            }
+
+
         }
 
         private string checkBox_kontrolu()
