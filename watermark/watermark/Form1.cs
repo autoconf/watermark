@@ -292,15 +292,36 @@ namespace watermark
                                     binaryB = Convert.ToString((int)piksel.B, 2);
                                     if (binaryR.Last() != binaryMetin[i - 2])
                                     {
-                                        R = R - 1;
+                                        if (R > 0)
+                                        {
+                                            R = R - 1;
+                                        }
+                                        else
+                                        {
+                                            R = R + 1;
+                                        }
                                     }
                                     if (binaryG.Last() != binaryMetin[i - 1])
                                     {
-                                        G = G - 1;
+                                        if (G > 0)
+                                        {
+                                            G = G - 1;
+                                        }
+                                        else
+                                        {
+                                            G = G + 1;
+                                        }
                                     }
                                     if (binaryB.Last() != binaryMetin[i])
                                     {
-                                        B = B - 1;
+                                        if (B > 0)
+                                        {
+                                            B = B - 1;
+                                        }
+                                        else
+                                        {
+                                            B = B + 1;
+                                        }
                                     }
                                     Color DonusenRenk = Color.FromArgb(A, R, G, B);
                                     yenigorsel.SetPixel(x, y, DonusenRenk);
@@ -343,41 +364,26 @@ namespace watermark
             {
                 //steganografi
             }
-            resmiKaydet(yenigorsel);
+            resmiKaydet(yenigorsel, binaryMetin.Length);
         }
 
-        public void resmiKaydet(Bitmap resim)
+        public void resmiKaydet(Bitmap resim, int binaryUzunluk)
         {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Filter = "Bitmap Resmi|*.bmp";//Jpeg Resmi|*.jpg|Gif Resmi|*.gif";
-            saveFileDialog1.Title = "Resmi Kaydet";
-            saveFileDialog1.ShowDialog();
+            SaveFileDialog sfd = new SaveFileDialog();//yeni bir kaydetme diyaloğu oluşturuyoruz.
 
-            if (saveFileDialog1.FileName != "") //Dosya adı boş değilse kaydedecek.
+            sfd.Filter = "Bitmap(*.bmp)|*.bmp";//.bmp veya .jpg olarak kayıt imkanı sağlıyoruz.
+
+            sfd.Title = "Kayıt";//diğaloğumuzun başlığını belirliyoruz.
+
+            sfd.FileName = binaryUzunluk.ToString();//kaydedilen resmimizin adını 'resim' olarak belirliyoruz.
+
+            DialogResult sonuç = sfd.ShowDialog();
+
+            if (sonuç == DialogResult.OK)
             {
-                // FileStream nesnesi ile kayıtı gerçekleştirecek. 
-                FileStream DosyaAkisi = (FileStream)saveFileDialog1.OpenFile();
-
-                switch (saveFileDialog1.FilterIndex)
-                {
-                    case 1:
-                        resim.Save(DosyaAkisi, System.Drawing.Imaging.ImageFormat.Bmp);
-                        break;
-
-                    /*case 2:
-                        resim.Save(DosyaAkisi, System.Drawing.Imaging.ImageFormat.Jpeg);
-                        break;
-
-                    case 3:
-                        resim.Save(DosyaAkisi, System.Drawing.Imaging.ImageFormat.Png);
-                        break;
-                    */
-                }
-
-                DosyaAkisi.Close();
+                resim.Save(sfd.FileName);//Böylelikle resmi istediğimiz yere kaydediyoruz.
             }
-
-
+            
         }
 
         private string checkBox_kontrolu()
