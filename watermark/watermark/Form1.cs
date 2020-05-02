@@ -266,17 +266,17 @@ namespace watermark
                     if (ilk6piksel[4] == '0' && ilk6piksel[5] == '0')
                     {
                         //tüm palet
-                        int i = 3;
-                        
-                            for (int y = 0; y < gorsel.Height; y++) //gorsel.Height
-                            {
+                        int i = 2;
+
+                        for (int y = 0; y < gorsel.Height; y++) //gorsel.Height
+                        {
                             for (int x = 0; x < gorsel.Width; x++) //gorsel.Width
                             {
-                                if (y == 0)
+                                if (y == 0 && x == 0)
                                 {
                                     x = x + 7;
                                 }
-                                if (i < binaryMetin.Length - 3)
+                                if (i < binaryMetin.Length - 2)
                                 {
                                     int R = 0, G = 0, B = 0, A = 0;
                                     Color piksel = gorsel.GetPixel(x, y);
@@ -290,6 +290,8 @@ namespace watermark
                                     binaryR = Convert.ToString((int)piksel.R, 2);
                                     binaryG = Convert.ToString((int)piksel.G, 2);
                                     binaryB = Convert.ToString((int)piksel.B, 2);
+
+
                                     if (binaryR.Last() != binaryMetin[i - 2])
                                     {
                                         if (R > 0)
@@ -323,12 +325,13 @@ namespace watermark
                                             B = B + 1;
                                         }
                                     }
-                                    Color DonusenRenk = Color.FromArgb(A, R, G, B);
+                                    Color DonusenRenk = Color.Empty;
+                                    DonusenRenk = Color.FromArgb(A, R, G, B);
                                     yenigorsel.SetPixel(x, y, DonusenRenk);
                                     string lastBinaryR = Convert.ToString((int)DonusenRenk.R, 2);
                                     string lastBinaryG = Convert.ToString((int)DonusenRenk.G, 2);
                                     string lastBinaryB = Convert.ToString((int)DonusenRenk.B, 2);
-                                    //MessageBox.Show($"Metin Karakteri : \t{binaryMetin[i]}\n{i}. piksel Kırmızı Binary 8 Biti ilk Hali : {binaryR} Dönüşen Hali : {lastBinaryR}\nMetin Karakteri : \t{binaryMetin[i+1]}\n{i}. piksel Yeşil Binary 8 Biti ilk Hali : {binaryG} Dönüşen Hali : {lastBinaryG}\nMetinKarakteri : \t{binaryMetin[i+2]}\n{i}. piksel Mavi Binary 8 Biti ilk Hali : {binaryB} Dönüşen Hali : {lastBinaryB}");//değerlendirme gösterimi 
+                                    //MessageBox.Show($"Metin Karakteri : \t{binaryMetin[i-2]}\nX{x}Y{y}. piksel Kırmızı Binary 8 Biti ilk Hali : {binaryR} Dönüşen Hali : {lastBinaryR}\nMetin Karakteri : \t{binaryMetin[i - 1]}\nX{x}Y{y}. piksel Yeşil Binary 8 Biti ilk Hali : {binaryG} Dönüşen Hali : {lastBinaryG}\nMetinKarakteri : \t{binaryMetin[i]}\nX{x}Y{y}. piksel Mavi Binary 8 Biti ilk Hali : {binaryB} Dönüşen Hali : {lastBinaryB}");//değerlendirme gösterimi
                                     i += 3;
                                 }
                             }
@@ -369,19 +372,19 @@ namespace watermark
 
         public void resmiKaydet(Bitmap resim, int binaryUzunluk)
         {
-            SaveFileDialog sfd = new SaveFileDialog();//yeni bir kaydetme diyaloğu oluşturuyoruz.
+            SaveFileDialog sfd = new SaveFileDialog();
 
-            sfd.Filter = "Bitmap(*.bmp)|*.bmp";//.bmp veya .jpg olarak kayıt imkanı sağlıyoruz.
+            sfd.Filter = "Bitmap(*.bmp)|*.bmp";
 
-            sfd.Title = "Kayıt";//diğaloğumuzun başlığını belirliyoruz.
+            sfd.Title = "Kayıt";
 
-            sfd.FileName = binaryUzunluk.ToString();//kaydedilen resmimizin adını 'resim' olarak belirliyoruz.
+            sfd.FileName = binaryUzunluk.ToString();
 
             DialogResult sonuç = sfd.ShowDialog();
 
             if (sonuç == DialogResult.OK)
             {
-                resim.Save(sfd.FileName);//Böylelikle resmi istediğimiz yere kaydediyoruz.
+                resim.Save(sfd.FileName);
             }
             
         }
