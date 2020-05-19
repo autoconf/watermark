@@ -511,7 +511,6 @@
             this.MinimizeBox = false;
             this.Name = "Form1";
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Su İzi (Watermark) ile Görüntü Oluşturma";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
