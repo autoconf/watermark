@@ -21,7 +21,7 @@ namespace watermark
         private void goruntuSecPictureBox_Click(object sender, EventArgs e)
         {
             try
-            { 
+            {
                 OpenFileDialog open = new OpenFileDialog();
                 open.Filter = "Image Files(*.png; *.jpg; *.jpeg; *.bmp)|*.png; *.jpg; *.jpeg; *.bmp";
                 if (open.ShowDialog() == DialogResult.OK)
@@ -66,7 +66,7 @@ namespace watermark
             else
             {
                 maxDegerLabel.ForeColor = Color.Black;
-            }          
+            }
         }
 
         private void panel1LabelDuzenle()//checkbox kontrol
@@ -88,8 +88,8 @@ namespace watermark
             else if (sifreAsciiRadioButton.Checked == true)
             {
                 panel2LabelDuzenle(max);
-                 //1.px = 1
-                 //2.px = 0
+                //1.px = 1
+                //2.px = 0
             }
             else if (sifreStegRadioButton.Checked == true)
             {
@@ -97,10 +97,11 @@ namespace watermark
                 //1.px = 1
                 //2.px = 1
             }
-            
+
         }
 
-        private void panel2LabelDuzenle(Int32 max) {
+        private void panel2LabelDuzenle(Int32 max)
+        {
             //piksel gizleme
             panel2.Enabled = true;
             tumPikselLabel.Text = "Max : " + (max - 1).ToString();
@@ -180,58 +181,12 @@ namespace watermark
             /// Checkkontrolü
             /// 
             string ilk6piksel = checkBox_kontrolu();
-            
-            //binary çevir
-            string result = string.Empty;
-            string binaryText = string.Empty;
-            foreach (char ch in metin)
-            {
-                string binary = string.Empty;
-                result += Convert.ToString((int)ch, 2) + "\t";
-                binary = Convert.ToString((int)ch, 2);
-
-                //çevirilen binary uzunluğuna göre ekleme yapılmalı 0000-00-0 gibi
-                if (binary.Length < 5)
-                {
-                    binaryText += "0000" + binary;
-                }
-                else if (binary.Length < 7)
-                {
-                    binaryText += "00" + binary;
-                }
-                else if (binary.Length < 8)
-                {
-                    binaryText += "0" + binary;
-                }
-                else
-                {
-                    binaryText += binary;
-                }
-                    
-            }
-            MessageBox.Show("Karakter bazlı Listeleme : " + result.Length + " Karakter \n\n" +  result + "\n\nKarakter bazlı 8 Bite Tamamlanmış Listeleme : " +binaryText.Length + " Karakter \n\n" + binaryText);
-
-            
-            /// Görüntüye ekleme işlemi
-            /// 
-
-            metniGoruntuyeGizle(ilk6piksel, binaryText);
-
-            
-
-            //metne çevir
-            List<Byte> byteList = new List<Byte>();
-            //8den başlıyor --> 8bit-1byte
-            for (int i = 0; i < binaryText.Length; i += 8)
-            {
-                byteList.Add(Convert.ToByte(binaryText.Substring(i, 8), 2));
-            }
-            MessageBox.Show(Encoding.ASCII.GetString(byteList.ToArray()));
+            metniGoruntuyeGizle(ilk6piksel);
         }
 
-        private void metniGoruntuyeGizle(string ilk6piksel, string binaryMetin)
+        private void metniGoruntuyeGizle(string ilk6piksel)
         {
-            int karakterSayisi = binaryMetin.Length;
+            int karakterSayisi = metinRichTextBox.Text.Length * 8;
             Bitmap songorsel = new Bitmap(goruntuSecPictureBox.Image);
             Bitmap yenigorsel = new Bitmap(goruntuSecPictureBox.Image);
             Bitmap gorsel = new Bitmap(goruntuSecPictureBox.Image);
@@ -256,12 +211,13 @@ namespace watermark
 
 
             ///29.04.2020 -- 8. pxden başlanıp oluşturulan metin eklenecek
-
+            string binaryMetin = string.Empty;
             islemler islemYap = new islemler();
             //ilk 6 bitten sonra tüm renk paletine metin ekleniyor..
             if (ilk6piksel[0] == '0' && ilk6piksel[1] == '0')
             {
                 //şifreleme yok
+                binaryMetin = islemYap.metinSifrele("sifresiz", metinRichTextBox.Text);
                 if (ilk6piksel[2] == '1' && ilk6piksel[3] == '0')
                 {
                     //tüm piksel
@@ -342,9 +298,9 @@ namespace watermark
                             binaryMetin += "0";
                         }
                         int i = 0;
-                        for (int y = 1; y < tekheight; y=y+2) //gorsel.Height
+                        for (int y = 1; y < tekheight; y = y + 2) //gorsel.Height
                         {
-                            for (int x = 1; x < tekwidth; x=x+2) //gorsel.Width
+                            for (int x = 1; x < tekwidth; x = x + 2) //gorsel.Width
                             {
                                 if (y == 0 && x == 0)
                                 {
@@ -413,9 +369,9 @@ namespace watermark
                     {
                         //kırmızı palet
                         int i = 0;
-                        for (int y = 1; y < tekheight; y=y+2) //gorsel.Height
+                        for (int y = 1; y < tekheight; y = y + 2) //gorsel.Height
                         {
-                            for (int x = 1; x < tekwidth; x=x+2) //gorsel.Width
+                            for (int x = 1; x < tekwidth; x = x + 2) //gorsel.Width
                             {
                                 if (y == 0 && x == 0)
                                 {
@@ -460,9 +416,9 @@ namespace watermark
                     {
                         //yesil palet
                         int i = 0;
-                        for (int y = 1; y < tekheight; y=y+2) //gorsel.Height
+                        for (int y = 1; y < tekheight; y = y + 2) //gorsel.Height
                         {
-                            for (int x = 1; x < tekwidth; x=x+2) //gorsel.Width
+                            for (int x = 1; x < tekwidth; x = x + 2) //gorsel.Width
                             {
                                 if (y == 0 && x == 0)
                                 {
@@ -507,9 +463,9 @@ namespace watermark
                     {
                         //mavi palet
                         int i = 0;
-                        for (int y = 1; y < tekheight; y=y+2) //gorsel.Height
+                        for (int y = 1; y < tekheight; y = y + 2) //gorsel.Height
                         {
-                            for (int x = 1; x < tekwidth; x=x+2) //gorsel.Width
+                            for (int x = 1; x < tekwidth; x = x + 2) //gorsel.Width
                             {
                                 if (y == 0 && x == 0)
                                 {
@@ -551,6 +507,7 @@ namespace watermark
                         }
                         resmiKaydet(/*songorsel*/yenigorsel, karakterSayisi);
                     }
+                    //tek piksel
                     else if (ilk6piksel[2] == '0' && ilk6piksel[3] == '1')
                     {
                         //çift piksel
@@ -785,15 +742,144 @@ namespace watermark
                             }
                         }
                     }
-                    else if (ilk6piksel[0] == '1' && ilk6piksel[1] == '0')
+                }
+            }
+            if (ilk6piksel[0] == '1' && ilk6piksel[1] == '0')
+            {
+                //reverse ascii
+                binaryMetin = islemYap.metinSifrele("rAscii", metinRichTextBox.Text);
+                if (ilk6piksel[2] == '1' && ilk6piksel[3] == '0')
+                {
+                    //tüm piksel
+                    if (ilk6piksel[4] == '0' && ilk6piksel[5] == '0')
                     {
-                        //reverse ascii
+                        //rgb palet
+                        try
+                        {
+                            songorsel = islemYap.metinGizle("RGB", yenigorsel, binaryMetin);
+                            resmiKaydet(songorsel, karakterSayisi);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("RGB Paletlerine Metin Gizleme İşleminde bir hata ile karşılaşıldı");
+                        }
                     }
-                    else if (ilk6piksel[0] == '1' && ilk6piksel[1] == '1')
+                    if (ilk6piksel[4] == '0' && ilk6piksel[5] == '1')
                     {
-                        //steganografi
+                        //kırmızı palet
+                        try
+                        {
+                            songorsel = islemYap.metinGizle("R", yenigorsel, binaryMetin);
+                            resmiKaydet(songorsel, karakterSayisi);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Kırmızı Paletine Metin Gizleme İşleminde bir hata ile karşılaşıldı");
+                        }
                     }
-                    //resmiKaydet(yenigorsel, karakterSayisi);
+                    if (ilk6piksel[4] == '1' && ilk6piksel[5] == '0')
+                    {
+                        //yesil palet
+                        try
+                        {
+                            songorsel = islemYap.metinGizle("G", yenigorsel, binaryMetin);
+                            resmiKaydet(songorsel, karakterSayisi);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Yeşil Palete Metin Gizleme İşleminde bir hata ile karşılaşıldı");
+                        }
+                    }
+                    if (ilk6piksel[4] == '1' && ilk6piksel[5] == '1')
+                    {
+                        //mavi palet
+                        try
+                        {
+                            songorsel = islemYap.metinGizle("B", yenigorsel, binaryMetin);
+                            resmiKaydet(songorsel, karakterSayisi);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Mavi Palete Metin Gizleme İşleminde bir hata ile karşılaşıldı");
+                        }
+                    }
+                }
+                else if (ilk6piksel[2] == '0' && ilk6piksel[3] == '0')
+                {
+                    //tek piksel
+                }
+                else if (ilk6piksel[2] == '0' && ilk6piksel[3] == '1')
+                {
+                    //çift piksel
+                }
+            }
+            if (ilk6piksel[0] == '1' && ilk6piksel[1] == '1')
+            {
+                //steganografi
+                binaryMetin = islemYap.metinSifrele("steg", metinRichTextBox.Text);
+                if (ilk6piksel[2] == '1' && ilk6piksel[3] == '0')
+                {
+                    //tüm piksel
+                    if (ilk6piksel[4] == '0' && ilk6piksel[5] == '0')
+                    {
+                        //rgb palet
+                        try
+                        {
+                            songorsel = islemYap.metinGizle("RGB", yenigorsel, binaryMetin);
+                            resmiKaydet(songorsel, karakterSayisi);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("RGB Paletlerine Metin Gizleme İşleminde bir hata ile karşılaşıldı");
+                        }
+                    }
+                    if (ilk6piksel[4] == '0' && ilk6piksel[5] == '1')
+                    {
+                        //kırmızı palet
+                        try
+                        {
+                            songorsel = islemYap.metinGizle("R", yenigorsel, binaryMetin);
+                            resmiKaydet(songorsel, karakterSayisi);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Kırmızı Paletine Metin Gizleme İşleminde bir hata ile karşılaşıldı");
+                        }
+                    }
+                    if (ilk6piksel[4] == '1' && ilk6piksel[5] == '0')
+                    {
+                        //yesil palet
+                        try
+                        {
+                            songorsel = islemYap.metinGizle("G", yenigorsel, binaryMetin);
+                            resmiKaydet(songorsel, karakterSayisi);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Yeşil Palete Metin Gizleme İşleminde bir hata ile karşılaşıldı");
+                        }
+                    }
+                    if (ilk6piksel[4] == '1' && ilk6piksel[5] == '1')
+                    {
+                        //mavi palet
+                        try
+                        {
+                            songorsel = islemYap.metinGizle("B", yenigorsel, binaryMetin);
+                            resmiKaydet(songorsel, karakterSayisi);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Mavi Palete Metin Gizleme İşleminde bir hata ile karşılaşıldı");
+                        }
+                    }
+                }
+                else if (ilk6piksel[2] == '0' && ilk6piksel[3] == '0')
+                {
+                    //tek piksel
+                }
+                else if (ilk6piksel[2] == '0' && ilk6piksel[3] == '1')
+                {
+                    //çift piksel
                 }
             }
         }

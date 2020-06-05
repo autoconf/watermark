@@ -215,11 +215,138 @@ namespace watermark
             }
             return yenigorsel;
         }
-        public string metinSifrele(string sifre, string binaryMetin)
+        public string metinSifrele(string sifre, string Metin)
         {
+            string metin = string.Empty;
             //şifreleme yapılıp metin geri dönecek
+            if (sifre == "rAscii")//binary metnin 
+            {
+                string result = string.Empty;
+                string binaryText = string.Empty;
+                foreach (char ch in Metin)
+                {
+                    string binary = string.Empty;
+                    result += Convert.ToString((int)ch, 2) + "\t";
+                    binary = Convert.ToString(255-((int)ch), 2);
+                    if (binary.Length < 3)
+                    {
+                        binaryText += "000000" + binary;
+                    }
+                    else if (binary.Length < 4)
+                    {
+                        binaryText += "00000" + binary;
+                    }
+                    else if (binary.Length < 5)
+                    {
+                        binaryText += "0000" + binary;
+                    }
+                    else if (binary.Length < 6)
+                    {
+                        binaryText += "000" + binary;
+                    }
+                    else if (binary.Length < 7)
+                    {
+                        binaryText += "00" + binary;
+                    }
+                    else if (binary.Length < 8)
+                    {
+                        binaryText += "0" + binary;
+                    }
+                    else
+                    {
+                        binaryText += binary;
+                    }
 
-            return binaryMetin;
+                }
+                metin = binaryText;
+            }
+            else if (sifre == "steg")
+            {
+                //harfin ascii karakter sırasından 5 fazlasını gizleme
+
+                string result = string.Empty;
+                string binaryText = string.Empty;
+                foreach (char ch in Metin)
+                {
+                    string binary = string.Empty;
+                    result += Convert.ToString((int)ch, 2) + "\t";
+                    binary = Convert.ToString(((int)ch - 5), 2);
+                    if (binary.Length < 3)
+                    {
+                        binaryText += "000000" + binary;
+                    }
+                    else if (binary.Length < 4)
+                    {
+                        binaryText += "00000" + binary;
+                    }
+                    else if (binary.Length < 5)
+                    {
+                        binaryText += "0000" + binary;
+                    }
+                    else if (binary.Length < 6)
+                    {
+                        binaryText += "000" + binary;
+                    }
+                    else if (binary.Length < 7)
+                    {
+                        binaryText += "00" + binary;
+                    }
+                    else if (binary.Length < 8)
+                    {
+                        binaryText += "0" + binary;
+                    }
+                    else
+                    {
+                        binaryText += binary;
+                    }
+                    
+                }
+                metin = binaryText;
+            }
+            else
+            {
+                string result = string.Empty;
+                string binaryText = string.Empty;
+                foreach (char ch in Metin)
+                {
+                    string binary = string.Empty;
+                    result += Convert.ToString((int)ch, 2) + "\t";
+                    binary = Convert.ToString((int)ch, 2);
+
+                    //çevirilen binary uzunluğuna göre ekleme yapılmalı 0000-00-0 gibi
+                    if (binary.Length < 3)
+                    {
+                        binaryText += "000000" + binary;
+                    }
+                    else if (binary.Length < 4)
+                    {
+                        binaryText += "00000" + binary;
+                    }
+                    else if (binary.Length < 5)
+                    {
+                        binaryText += "0000" + binary;
+                    }
+                    else if (binary.Length < 6)
+                    {
+                        binaryText += "000" + binary;
+                    }
+                    else if (binary.Length < 7)
+                    {
+                        binaryText += "00" + binary;
+                    }
+                    else if (binary.Length < 8)
+                    {
+                        binaryText += "0" + binary;
+                    }
+                    else
+                    {
+                        binaryText += binary;
+                    }
+
+                }
+                metin = binaryText;
+            }
+            return metin;
         }
     }
 }
